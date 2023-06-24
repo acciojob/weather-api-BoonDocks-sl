@@ -1,20 +1,16 @@
-document.getElementById('getWeatherButton').addEventListener('click', function () {
-    var apiKey = 'https://openweathermap.org/api'; 
+document.getElementById('weatherButton').addEventListener('click', function() {
 
+	
+  fetch('https://api.openweathermap.org/data/2.5/weather?q=London&appid=999b280e8a2bab87c04ce16c25e1420c')
+	.then(response => response.json())
+	.then(data => {
 
-    fetch('https://api.openweathermap.org/data/2.5/weather?q=London&appid=' + apiKey)
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Error occurred while fetching weather data. Status:', response.status);
-            }
-        })
-        .then(function (data) {
-            var weather = data.weather[0].main;
-            document.getElementById('weatherData').textContent = 'Current weather in London: ' + weather;
-        })
-        .catch(function (error) {
-            console.error('An error occurred while making the request:', error);
-        });
+		
+	  var weatherDescription = data.weather[0].description;
+	  var message = 'Current weather in London: '+weatherDescription;
+
+		
+	  document.getElementById('weatherData').textContent = message;
+	})
+	.catch(error => console.log(error)); // Handle any errors that occur during the fetch request
 });
