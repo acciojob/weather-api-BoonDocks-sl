@@ -1,4 +1,4 @@
-/document.getElementById('getWeatherButton').addEventListener('click', function () {
+document.getElementById('getWeatherButton').addEventListener('click', function () {
     var apiKey = 'https://openweathermap.org/api'; 
 
 
