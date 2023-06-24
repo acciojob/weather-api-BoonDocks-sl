@@ -1,14 +1,23 @@
-//your JS code here. If required.
-document.getElementById('weatherButton').addEventListener('click', function() {
-  // Send a GET request to the OpenWeatherMap API
-  fetch('https://api.openweathermap.org/data/2.5/weather?q=London&appid=999b280e8a2bab87c04ce16c25e1420c')
-	.then(response => response.json())
-	.then(data => {
-	  // Extract and format the weather data
-	  var weatherDescription = data.weather[0].description;
-	  var message = 'Current weather in London: '+weatherDescription;
-	  // Update the weatherData div with the weather information
-	  document.getElementById('weatherData').textContent = message;
-	})
-	.catch(error => console.log(error)); // Handle any errors that occur during the fetch request
+document.getElementById('getWeatherButton').addEventListener('click', function () {
+    var request = new XMLHttpRequest();
+    var apiKey = 'https://openweathermap.org/api'; 
+	
+
+    request.open('GET', 'https://api.openweathermap.org/data/2.5/weather?q=London&appid=' + apiKey, true);
+
+    request.onload = function () {
+        if (request.status >= 200 && request.status < 400) {
+            var response = JSON.parse(request.responseText);
+            var weather = response.weather[0].main;
+            document.getElementById('weatherData').textContent = 'Current weather in London: ' + weather;
+        } else {
+            console.error('Error occurred while fetching weather data. Status:', request.status);
+        }
+    };
+
+    request.onerror = function () {
+        console.error('An error occurred while making the request.');
+    };
+
+    request.send();
 });
